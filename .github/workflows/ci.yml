@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: ["main"]
+    branches: ["**"]
   pull_request:
-    branches: ["main"]
+    branches: ["**"]
 
 permissions:
   contents: read
@@ -14,7 +14,7 @@ jobs:
     name: Python Tests
     runs-on: ubuntu-latest
     env:
-      PYTHONPATH: ${{ github.workspace }}/src:${{ env.PYTHONPATH }}
+      PYTHONPATH: ${{ github.workspace }}/src
     strategy:
       matrix:
         python-version: ["3.11"]
