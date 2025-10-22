@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, jsonify, session
-from .core import GameManager
+from core import GameManager
 
 app = Flask(__name__)
 app.secret_key = "poker-dice-secret-key-2024"
