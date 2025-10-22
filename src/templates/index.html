@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="welcome-screen">
+    <h1>🎲 Покер на костях 🎲</h1>
+    <p class="subtitle">Многопользовательская онлайн-игра</p>
+    
+    <div class="game-options">
+        <div class="option-card">
+            <h3>Присоединиться к игре</h3>
+            <form id="join-form">
+                <input type="text" id="game-id" placeholder="ID игры" required>
+                <input type="text" id="player-name" placeholder="Ваше имя" required>
+                <button type="submit">Присоединиться</button>
+            </form>
+        </div>
+        
+        <div class="option-card">
+            <h3>Создать новую игру</h3>
+            <form id="create-form">
+                <input type="text" id="create-player-name" placeholder="Ваше имя" required>
+                <div class="settings">
+                    <label>
+                        Максимум игроков: 
+                        <select id="max-players">
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4" selected>4</option>
+                        </select>
+                    </label>
+                    <label>
+                        Количество раундов: 
+                        <select id="max-rounds">
+                            <option value="3" selected>3</option>
+                            <option value="5">5</option>
+                            <option value="7">7</option>
+                        </select>
+                    </label>
+                </div>
+                <button type="submit">Создать игру</button>
+            </form>
+        </div>
+    </div>
+    
+    <div id="message" class="message" style="display: none;"></div>
+</div>
+{% endblock %}
