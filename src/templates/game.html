@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="game-container">
+    <header class="game-header">
+        <h1>🎲 Покер на костях</h1>
+        <div class="game-info">
+            <span id="round-info">Раунд: -/-</span>
+            <span id="game-status">Статус: -</span>
+            <span id="game-id-display">ID: {{ game_id }}</span>
+            <button id="leave-game" class="btn-secondary">Покинуть игру</button>
+        </div>
+    </header>
+
+    <div class="game-content">
+        <!-- Таблица игроков -->
+        <div class="players-panel">
+            <h3>Игроки</h3>
+            <div id="players-list" class="players-list">
+                <div class="player-item">
+                    <span>Загрузка...</span>
+                    <span class="player-score">0</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Основная игровая область -->
+        <div class="game-area">
+            <!-- Область броска -->
+            <div class="dice-area">
+                <h3>Текущий бросок</h3>
+                <div class="dice-container" id="dice-container">
+                    <div class="dice-placeholder">
+                        Ожидание начала игры...
+                    </div>
+                </div>
+                
+                <!-- Информация о комбинации -->
+                <div class="combination-info">
+                    <h3>Комбинация</h3>
+                    <div id="combination-display" class="combination-display">
+                        -
+                    </div>
+                </div>
+            </div>
+
+            <!-- Управление игрой -->
+            <div id="lobby-controls" class="game-controls">
+                <div class="controls-section">
+                    <h3>Ожидание игроков</h3>
+                    <p>Нажмите "Готов к игре", когда все присоединятся</p>
+                    <button id="ready-btn" class="btn-primary">Готов к игре</button>
+                </div>
+            </div>
+
+            <div id="active-controls" class="game-controls" style="display: none;">
+                <div class="controls-section">
+                    <h3>🎲 Ваш ход!</h3>
+                    <div class="instructions">
+                        <h4>Как играть:</h4>
+                        <p>1. <strong>Выберите кости</strong> - кликните на кости, которые хотите перебросить</p>
+                        <p>2. <strong>Перебросьте</strong> - нажмите кнопку "Перебросить выбранные"</p>
+                        <p>3. <strong>Завершите ход</strong> - когда довольны результатом</p>
+                    </div>
+                    
+                    <div class="action-buttons">
+                        <button id="reroll-btn" class="btn-primary">
+                            🔄 Перебросить выбранные (<span id="rerolls-left">2</span>)
+                        </button>
+                        <button id="end-turn-btn" class="btn-success">✅ Завершить ход</button>
+                    </div>
+                    
+                    <div class="selection-info">
+                        🎯 Выбрано костей: <span id="selected-count">0</span>
+                        <br>
+                        <small>Кликните на кости чтобы выбрать/отменить выбор</small>
+                    </div>
+                </div>
+            </div>
+
+            <div id="waiting-controls" class="game-controls" style="display: none;">
+                <div class="controls-section">
+                    <h3>⏳ Ожидание хода...</h3>
+                    <p>Сейчас ходит: <span id="current-player-name">-</span></p>
+                    <div class="loading-spinner"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Модальное окно результатов -->
+<div id="results-modal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <h2>🎉 Игра завершена! 🎉</h2>
+        <div id="winner-info" class="winner-info"></div>
+        <div id="final-scores" class="final-scores"></div>
+        <button id="new-game-btn" class="btn-primary">Новая игра</button>
+    </div>
+</div>
+{% endblock %}
