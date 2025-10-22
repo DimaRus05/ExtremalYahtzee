@@ -13,6 +13,8 @@ jobs:
   python:
     name: Python Tests
     runs-on: ubuntu-latest
+    env:
+      PYTHONPATH: ${{ github.workspace }}/src:${{ env.PYTHONPATH }}
     strategy:
       matrix:
         python-version: ["3.11"]
