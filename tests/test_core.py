@@ -19,7 +19,8 @@ def test_can_start_with_two_ready_players():
     state = game.get_game_state(ids[0])
     assert state["status"] == "active"
     assert len(state["players"]) == 2
-    assert state["current_turn"]["roll"] and len(state["current_turn"]["roll"]) == 5
+    assert state["current_turn"]["roll"] and len(
+        state["current_turn"]["roll"]) == 5
 
 
 def test_reroll_limits_and_indices_do_not_crash():
@@ -62,12 +63,16 @@ def test_evaluate_combinations_direct():
     gid = gm.create_game()
     game = gm.get_game(gid)
 
-    assert game._evaluate_combination([6, 6, 6, 6, 6]) == Combination.FIVE_OF_A_KIND
-    assert game._evaluate_combination([2, 2, 2, 2, 5]) == Combination.FOUR_OF_A_KIND
-    assert game._evaluate_combination([3, 3, 3, 5, 5]) == Combination.FULL_HOUSE
+    assert game._evaluate_combination(
+        [6, 6, 6, 6, 6]) == Combination.FIVE_OF_A_KIND
+    assert game._evaluate_combination(
+        [2, 2, 2, 2, 5]) == Combination.FOUR_OF_A_KIND
+    assert game._evaluate_combination(
+        [3, 3, 3, 5, 5]) == Combination.FULL_HOUSE
     assert game._evaluate_combination([1, 2, 3, 4, 5]) == Combination.STRAIGHT
     assert game._evaluate_combination([2, 3, 4, 5, 6]) == Combination.STRAIGHT
-    assert game._evaluate_combination([2, 2, 2, 4, 5]) == Combination.THREE_OF_A_KIND
+    assert game._evaluate_combination(
+        [2, 2, 2, 4, 5]) == Combination.THREE_OF_A_KIND
     assert game._evaluate_combination([1, 1, 3, 3, 5]) == Combination.TWO_PAIRS
     assert game._evaluate_combination([6, 6, 2, 3, 4]) == Combination.ONE_PAIR
     assert game._evaluate_combination([1, 3, 4, 5, 6]) == Combination.HIGH_DIE

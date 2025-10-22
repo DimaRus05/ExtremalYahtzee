@@ -16,14 +16,16 @@ def test_create_and_join_and_ready_flow(client):
     assert data["success"] is True
     game_id = data["game_id"]
 
-    rv1 = client.post("/join_game", json={"game_id": game_id, "player_name": "Alice"})
+    rv1 = client.post(
+        "/join_game", json={"game_id": game_id, "player_name": "Alice"})
     assert rv1.status_code == 200
     data1 = rv1.get_json()
     assert data1["success"] is True
 
     client2 = flask_app.test_client()
 
-    rv2 = client2.post("/join_game", json={"game_id": game_id, "player_name": "Bob"})
+    rv2 = client2.post(
+        "/join_game", json={"game_id": game_id, "player_name": "Bob"})
     assert rv2.status_code == 200
     data2 = rv2.get_json()
     assert data2["success"] is True
@@ -48,7 +50,8 @@ def test_create_and_join_and_ready_flow(client):
         assert state["current_turn"]["roll"]
 
     if any(p["is_current"] and p["name"] == "Alice" for p in state["players"]):
-        rv = client.post(f"/game/{game_id}/reroll", json={"dice_to_reroll": [0, 1]})
+        rv = client.post(f"/game/{game_id}/reroll",
+                         json={"dice_to_reroll": [0, 1]})
         assert rv.status_code == 200
         r = rv.get_json()
         assert r["success"] is True

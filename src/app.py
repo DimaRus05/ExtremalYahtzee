@@ -1,6 +1,5 @@
 from flask import Flask, render_template, request, jsonify, session
-from .core import GameManager, DicePokerGame
-import uuid
+from .core import GameManager
 
 app = Flask(__name__)
 app.secret_key = "poker-dice-secret-key-2024"
@@ -129,8 +128,7 @@ def reroll_dice(game_id):
 
     if success:
         return jsonify({"success": True, "game_state": game.get_game_state(player_id)})
-    else:
-        return jsonify({"success": False, "error": "Не удалось перебросить кости"})
+    return jsonify({"success": False, "error": "Не удалось перебросить кости"})
 
 
 @app.route("/game/<game_id>/end_turn", methods=["POST"])
@@ -148,8 +146,7 @@ def end_turn(game_id):
 
     if success:
         return jsonify({"success": True, "game_state": game.get_game_state(player_id)})
-    else:
-        return jsonify({"success": False, "error": "Не удалось завершить ход"})
+    return jsonify({"success": False, "error": "Не удалось завершить ход"})
 
 
 @app.route("/game/<game_id>/leave", methods=["POST"])

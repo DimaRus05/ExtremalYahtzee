@@ -1,6 +1,7 @@
 import unittest
 from core import DicePokerGame, Combination, GameStatus
 
+
 class TestDicePokerGame(unittest.TestCase):
     def setUp(self):
         self.game = DicePokerGame(game_id="test-game")
@@ -9,7 +10,7 @@ class TestDicePokerGame(unittest.TestCase):
         player_id = self.game.add_player("Alice")
         self.assertIn(player_id, self.game.players)
         self.assertEqual(self.game.players[player_id].name, "Alice")
-        
+
         # Проверка добавления второго игрока
         player_id2 = self.game.add_player("Bob")
         self.assertIn(player_id2, self.game.players)
@@ -28,7 +29,7 @@ class TestDicePokerGame(unittest.TestCase):
         # Отмечаем игроков как ready
         for pid in self.game.players:
             self.game.set_player_ready(pid)
-        
+
         self.assertTrue(self.game.start_game())
         self.assertEqual(self.game.status, GameStatus.ACTIVE)
 
@@ -44,7 +45,7 @@ class TestDicePokerGame(unittest.TestCase):
 
         original_roll = self.game.current_roll.copy()
         # Перебрасываем первые две кости
-        success = self.game.reroll_dice(player.id, [0,1])
+        success = self.game.reroll_dice(player.id, [0, 1])
         self.assertTrue(success)
         self.assertNotEqual(original_roll[:2], self.game.current_roll[:2])
 
@@ -88,6 +89,7 @@ class TestDicePokerGame(unittest.TestCase):
         winner_state = game.get_game_state()
         self.assertIn("winner", winner_state)
         self.assertIsNotNone(winner_state["winner"])
+
 
 if __name__ == "__main__":
     unittest.main()
