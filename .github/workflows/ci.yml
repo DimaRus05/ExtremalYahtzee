@@ -13,6 +13,8 @@ jobs:
   python:
     name: Python Tests
     runs-on: ubuntu-latest
+    env:
+      PYTHONPATH: ${{ github.workspace }}/src:${{ env.PYTHONPATH }}
     strategy:
       matrix:
         python-version: ["3.11"]
@@ -32,6 +34,16 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          pip install ruff pylint
+
+      - name: Lint (ruff)
+        run: |
+          ruff check .
+        continue-on-error: true
+
+      - name: Lint (pylint)
+        run: |
+          pylint src || true
 
       - name: Run tests (pytest)
         run: |
