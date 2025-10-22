@@ -14,8 +14,9 @@
   "max_players": 4,
   "max_rounds": 3
 }
-
-Response JSON:
+```
+**Response JSON:**
+```
 {
   "success": true,
   "game_id": "uuid-игры"
@@ -23,7 +24,7 @@ Response JSON:
 ```
 ### 3.3 Присоединение к игре
 
-POST /join_game
+**POST /join_game**
 **Request JSON:**
 ```
 {
@@ -42,7 +43,7 @@ POST /join_game
 ```
 ### 3.4 Состояние игры
 
-GET /game/<game_id>/state
+**GET /game/<game_id>/state**
 Возвращает текущее состояние игры для текущего игрока.
 **Response JSON:**
 ```
@@ -63,7 +64,7 @@ GET /game/<game_id>/state
 ```
 ### 3.5 Отметить готовность
 
-POST /game/<game_id>/ready
+**POST /game/<game_id>/ready**
 Отмечает игрока как готового. Если все игроки готовы — запускает игру.
 **Response JSON:**
 ```
@@ -75,7 +76,7 @@ POST /game/<game_id>/ready
 ```
 ### 3.6 Переброс кубиков
 
-POST /game/<game_id>/reroll
+**POST /game/<game_id>/reroll**
 **Request JSON:**
 ```
 {
@@ -92,7 +93,7 @@ POST /game/<game_id>/reroll
 ```
 ### 3.7 Завершение хода
 
-POST /game/<game_id>/end_turn
+**POST /game/<game_id>/end_turn**
 Завершает текущий ход и сохраняет очки.
 **Response JSON:**
 ```
@@ -103,7 +104,7 @@ POST /game/<game_id>/end_turn
 ```
 ### 3.8 Покинуть игру
 
-POST /game/<game_id>/leave
+**POST /game/<game_id>/leave**
 Удаляет игрока из игры и очищает сессию.
 **Response JSON:**
 ```
