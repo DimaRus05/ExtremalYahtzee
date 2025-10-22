@@ -101,6 +101,7 @@ class DicePokerGame:
         if self.remaining_rerolls <= 0:
             return False
         
+        # Перебрасываем выбранные кости
         for idx in dice_to_reroll:
             if 0 <= idx < 5:
                 self.current_roll[idx] = random.randint(1, 6)
@@ -214,6 +215,24 @@ class DicePokerGame:
             reverse=True
         )
         
+        # Определяем current_turn в зависимости от статуса
+        current_turn = None
+        if self.status == GameStatus.ACTIVE:
+            combination = None
+            if self.current_roll:
+                combination = self._evaluate_combination(self.current_roll).value
+                
+            current_turn = {
+                "roll": self.current_roll,
+                "remaining_rerolls": self.remaining_rerolls,
+                "combination": combination
+            }
+        
+        # Определяем winner в зависимости от статуса
+        winner = None
+        if self.status == GameStatus.COMPLETED:
+            winner = self._get_winner()
+        
         state = {
             "game_id": self.game_id,
             "status": self.status.value,
@@ -229,12 +248,8 @@ class DicePokerGame:
                 }
                 for p in sorted_players
             ],
-            "current_turn": {
-                "roll": self.current_roll,
-                "remaining_rerolls": self.remaining_rerolls,
-                "combination": self._evaluate_combination(self.current_roll).value if self.current_roll else None
-            } if self.status == GameStatus.ACTIVE else None,
-            "winner": self._get_winner() if self.status == GameStatus.COMPLETED else None
+            "current_turn": current_turn,
+            "winner": winner
         }
         
         return state
@@ -250,6 +265,13 @@ class DicePokerGame:
             "name": winner.name,
             "score": winner.score
         }
+    
+    def set_player_ready(self, player_id: str) -> bool:
+        """Отмечает игрока как готового"""
+        if player_id in self.players:
+            self.players[player_id].is_ready = True
+            return True
+        return False
 
 class GameManager:
     """Менеджер для управления всеми играми"""
@@ -271,15 +293,3 @@ class GameManager:
         """Удаляет игру"""
         if game_id in self.games:
             del self.games[game_id]
-    
-    def cleanup_old_games(self, hours_old: int = 24):
-        """Очищает старые игры"""
-        cutoff_time = datetime.now().timestamp() - (hours_old * 3600)
-        
-        games_to_remove = [
-            game_id for game_id, game in self.games.items()
-            if game.created_at.timestamp() < cutoff_time
-        ]
-        
-        for game_id in games_to_remove:
-            self.remove_game(game_id)
