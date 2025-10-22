@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, jsonify, session
-from core import GameManager, DicePokerGame
+from .core import GameManager, DicePokerGame
 import uuid
 
 app = Flask(__name__)
